@@ -1,1 +1,3 @@
 rootProject.name = 'spring-boot-converters'
+
+include 'spring-boot-converters-itest'
