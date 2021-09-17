@@ -5,15 +5,14 @@
 ## Overview
 
 Spring Boot Converters is a Spring Boot Library that adds some HttpMessageConverters to the application.
-Some common file formats can then be used for the REST interfaces like XML.
+Some common file formats can then be used for the REST interfaces.
 
 ## Supported Formats
 
-|Format|Status|Since|
-|---|:---:|:---:|
-|XML|Supported|1.0.0|
-|CSV|Planned|-|
-|Excel|Planned|-|
+|Format|Status|Since|Documentation|
+|---|:---:|:---:|:---:|
+|XML|Supported|1.0.0|In Progress|
+|CSV|Supported|1.0.0|In Progress|
 
 ## Usage
 
@@ -23,7 +22,7 @@ Some common file formats can then be used for the REST interfaces like XML.
 
 ### Enable in Spring Boot
 
-To enable the converters, first add the `@EnableSpringBootConverters` annotation to the application class.
+To enable the converters, the application class must first be provided with the annotation `@EnableSpringBootConverters`.
 
 ```java
 @SpringBootApplication
@@ -33,12 +32,13 @@ public class MyApplication {
 }
 ```
 
-Then the formats that should be used have to been enabled in the properties.
-This is an overview of all current available properties and the MIME types they support.
+Then the formats, which should be used, must be activated in the properties.
+Below is an overview of all currently available properties and the MIME types that are activated by them.
 
 |Property|MIME Types|Since|
 |---|---|:---:|
 |spring.converters.enable-xml|application/xml & text/xml|1.0.0|
+|spring.converters.enable-csv|application/csv & text/csv|1.0.0|
 
 Now the formatter can be used in any rest controller.
 
