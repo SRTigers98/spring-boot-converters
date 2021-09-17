@@ -23,11 +23,12 @@ jobs:
       run: chmod +x gradlew
     - name: Build Library
       run: ./gradlew :build
-    - name: Execute Integrationstests
+    - name: Execute Integrationtests
       run: ./gradlew :spring-boot-converters-itest:test
     - name: Build Jar
       run: ./gradlew clean :jar
     - name: Upload Jar
       uses: actions/upload-artifact@v2.2.4
       with:
+        name: spring-boot-converters.jar
         path: build/libs/spring-boot-converters*.jar
