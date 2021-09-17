@@ -1,5 +1,6 @@
 package com.github.srtigers98.spring.boot.converters;
 
+import com.github.srtigers98.spring.boot.converters.csv.OpenCSVHttpMessageConverter;
 import com.github.srtigers98.spring.boot.converters.xml.XStreamHttpMessageConverter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -19,5 +20,11 @@ public class SpringBootConvertersConfiguration {
   @ConditionalOnProperty("spring.converters.enable-xml")
   public HttpMessageConverter<Object> xStreamHttpMessageConverter() {
     return new XStreamHttpMessageConverter();
+  }
+
+  @Bean
+  @ConditionalOnProperty("spring.converters.enable-csv")
+  public HttpMessageConverter<Object[]> openCsvHttpMessageConverter() {
+    return new OpenCSVHttpMessageConverter();
   }
 }

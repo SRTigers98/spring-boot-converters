@@ -1,5 +1,6 @@
 package com.github.srtigers98.spring.boot.converters;
 
+import com.github.srtigers98.spring.boot.converters.csv.OpenCSVHttpMessageConverter;
 import com.github.srtigers98.spring.boot.converters.xml.XStreamHttpMessageConverter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,5 +22,13 @@ class SpringBootConvertersConfigurationTest {
 
     assertThat(result, is(notNullValue()));
     assertThat(result, is(instanceOf(XStreamHttpMessageConverter.class)));
+  }
+
+  @Test
+  void openCsvHttpMessageConverterTest() {
+    var result = tested.openCsvHttpMessageConverter();
+
+    assertThat(result, is(notNullValue()));
+    assertThat(result, is(instanceOf(OpenCSVHttpMessageConverter.class)));
   }
 }
