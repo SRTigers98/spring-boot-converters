@@ -1,5 +1,5 @@
 root = true
 
-[*.xml]
+[{*.xml, *.csv}]
 end_of_line = lf
 insert_final_newline = false

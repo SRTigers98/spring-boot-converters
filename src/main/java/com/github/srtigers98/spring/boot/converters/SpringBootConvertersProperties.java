@@ -13,4 +13,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class SpringBootConvertersProperties {
 
   private boolean enableXml = false;
+  private boolean enableCsv = false;
 }

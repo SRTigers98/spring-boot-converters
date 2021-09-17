@@ -27,6 +27,8 @@ dependencies {
 
     // XML Conversion
     implementation 'com.thoughtworks.xstream:xstream:1.4.18'
+    // CSV Conversion
+    implementation 'com.opencsv:opencsv:5.5.2'
 
     compileOnly 'org.projectlombok:lombok'
 
