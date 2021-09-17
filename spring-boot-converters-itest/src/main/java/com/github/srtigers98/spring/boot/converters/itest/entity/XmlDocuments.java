@@ -1,21 +1,19 @@
 package com.github.srtigers98.spring.boot.converters.itest.entity;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@XStreamAlias("XmlDocument")
-@Entity
-public class XmlDocument {
+public class XmlDocuments {
 
-  @Id
-  private Integer id;
-  private String  message;
+  @XStreamAlias("XmlDocument")
+  @XStreamImplicit
+  private List<XmlDocument> documents;
 }

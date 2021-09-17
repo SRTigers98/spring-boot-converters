@@ -15,8 +15,9 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,6 +35,7 @@ class XmlControllerTest extends IntegrationTest {
 
   @BeforeEach
   void setUp() {
+    repository.deleteAll();
     repository.save(testDocumentGet());
   }
 
@@ -55,6 +57,40 @@ class XmlControllerTest extends IntegrationTest {
   }
 
   @Test
+  void getXmlDocumentListTest() throws Exception {
+    var xml = Files.contentOf(ResourceUtils.getFile("classpath:xml/test-get-list.xml"),
+                              StandardCharsets.UTF_8);
+    var testGetXml = this.sanitizeFileContent(xml);
+
+    var request = MockMvcRequestBuilders.get("/xml/list");
+
+    this.mvc.perform(request)
+            .andExpect(status().isOk())
+            .andExpect(mvcResult -> {
+              var result = mvcResult.getResponse().getContentAsString();
+              assertThat(result, is(notNullValue()));
+              assertThat(result, is(testGetXml));
+            });
+  }
+
+  @Test
+  void getXmlDocumentListCustomTest() throws Exception {
+    var xml = Files.contentOf(ResourceUtils.getFile("classpath:xml/test-get-list-custom.xml"),
+                              StandardCharsets.UTF_8);
+    var testGetXml = this.sanitizeFileContent(xml);
+
+    var request = MockMvcRequestBuilders.get("/xml/list/custom");
+
+    this.mvc.perform(request)
+            .andExpect(status().isOk())
+            .andExpect(mvcResult -> {
+              var result = mvcResult.getResponse().getContentAsString();
+              assertThat(result, is(notNullValue()));
+              assertThat(result, is(testGetXml));
+            });
+  }
+
+  @Test
   void saveXmlDocumentTest() throws Exception {
     var xml = Files.contentOf(ResourceUtils.getFile("classpath:xml/test-post.xml"),
                               StandardCharsets.UTF_8);
@@ -69,6 +105,27 @@ class XmlControllerTest extends IntegrationTest {
 
     assertThat(repository.findById(99).isPresent(), is(true));
     assertThat(repository.findById(99).get(), is(testDocumentPost()));
+  }
+
+  @Test
+  void saveXmlDocumentListTest() throws Exception {
+    var xml = Files.contentOf(ResourceUtils.getFile("classpath:xml/test-post-list.xml"),
+                              StandardCharsets.UTF_8);
+    var testPostXml = this.sanitizeFileContent(xml);
+
+    var request = MockMvcRequestBuilders.post("/xml/list")
+                                        .contentType(MediaType.APPLICATION_XML)
+                                        .content(testPostXml);
+
+    this.mvc.perform(request)
+            .andExpect(status().isOk());
+
+    var dbSnapshot = repository.findAll();
+    assertThat(dbSnapshot, is(notNullValue()));
+    assertThat(dbSnapshot.size(), is(3));
+    assertThat(dbSnapshot.stream()
+                         .map(XmlDocument::getId)
+                         .collect(Collectors.toList()), hasItems(42, 55, 99));
   }
 
   private XmlDocument testDocumentGet() {
