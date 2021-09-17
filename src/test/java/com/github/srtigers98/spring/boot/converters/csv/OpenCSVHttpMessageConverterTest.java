@@ -1,5 +1,6 @@
 package com.github.srtigers98.spring.boot.converters.csv;
 
+import com.github.srtigers98.spring.boot.converters.util.UnitTestUtils;
 import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -80,7 +81,9 @@ class OpenCSVHttpMessageConverterTest {
       var result = csvStream.toString();
 
       assertThat(result, is(notNullValue()));
-      assertThat(result, is(Files.readString(testOutputCsv())));
+      assertThat(result, is(UnitTestUtils.sanitizeFileContent(
+          Files.readString(testOutputCsv())
+      )));
     }
   }
 

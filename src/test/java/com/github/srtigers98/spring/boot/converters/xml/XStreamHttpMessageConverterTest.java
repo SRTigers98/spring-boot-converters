@@ -1,5 +1,6 @@
 package com.github.srtigers98.spring.boot.converters.xml;
 
+import com.github.srtigers98.spring.boot.converters.util.UnitTestUtils;
 import lombok.Builder;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
@@ -60,7 +61,9 @@ class XStreamHttpMessageConverterTest {
 
       var result = xmlStream.toString();
       assertThat(result, is(notNullValue()));
-      assertThat(result, is(Files.readString(testXml())));
+      assertThat(result, is(UnitTestUtils.sanitizeFileContent(
+          Files.readString(testXml())
+      )));
     }
   }
 
