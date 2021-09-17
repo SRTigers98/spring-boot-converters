@@ -27,6 +27,7 @@ public class XStreamHttpMessageConverter extends AbstractHttpMessageConverter<Ob
   public XStreamHttpMessageConverter() {
     super(SUPPORTED_MEDIA_TYPES);
     this.xStream = new XStream();
+    this.xStream.autodetectAnnotations(true);
     this.xStream.addPermission(this::supports);
   }
 
