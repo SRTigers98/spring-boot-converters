@@ -1,5 +1,7 @@
 # Spring Boot Converters
 
+[![Build](https://github.com/SRTigers98/spring-boot-converters/actions/workflows/build.yml/badge.svg)](https://github.com/SRTigers98/spring-boot-converters/actions/workflows/build.yml)
+
 ---
 
 ## Overview
