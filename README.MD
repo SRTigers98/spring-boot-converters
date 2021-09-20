@@ -3,6 +3,7 @@
 [![Build](https://github.com/SRTigers98/spring-boot-converters/actions/workflows/build.yml/badge.svg)](https://github.com/SRTigers98/spring-boot-converters/actions/workflows/build.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SRTigers98_spring-boot-converters&metric=alert_status)](https://sonarcloud.io/dashboard?id=SRTigers98_spring-boot-converters)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=SRTigers98_spring-boot-converters&metric=coverage)](https://sonarcloud.io/dashboard?id=SRTigers98_spring-boot-converters)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=SRTigers98_spring-boot-converters&metric=security_rating)](https://sonarcloud.io/dashboard?id=SRTigers98_spring-boot-converters)
 
 ---
 
