@@ -1,6 +1,6 @@
 package com.github.srtigers98.spring.boot.converters.csv;
 
-import com.opencsv.CSVWriter;
+import com.opencsv.ICSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvFieldAssignmentException;
@@ -61,7 +61,7 @@ public class OpenCSVHttpMessageConverter extends AbstractHttpMessageConverter<Ob
          var outputWriter = new OutputStreamWriter(outputStream);
          var writer = new BufferedWriter(outputWriter)) {
       new StatefulBeanToCsvBuilder<>(writer)
-          .withSeparator(CSVWriter.DEFAULT_SEPARATOR)
+          .withSeparator(ICSVWriter.DEFAULT_SEPARATOR)
           .withApplyQuotesToAll(false)
           .withOrderedResults(true)
           .build()
