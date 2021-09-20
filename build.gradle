@@ -52,3 +52,11 @@ jacocoTestReport {
         xml.required = true
     }
 }
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "SRTigers98_spring-boot-converters"
+        property "sonar.organization", "srtigers98"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
