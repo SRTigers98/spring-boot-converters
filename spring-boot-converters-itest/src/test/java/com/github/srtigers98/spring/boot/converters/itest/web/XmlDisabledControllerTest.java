@@ -30,7 +30,8 @@ class XmlDisabledControllerTest extends IntegrationTest {
 
   @BeforeEach
   void setUp() {
-    this.repository.save(new XmlDocument(0, "A random message"));
+    repository.deleteAll();
+    repository.save(new XmlDocument(0, "A random message"));
   }
 
   @Test

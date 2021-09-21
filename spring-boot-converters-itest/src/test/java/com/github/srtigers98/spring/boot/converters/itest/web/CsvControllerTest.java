@@ -25,12 +25,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("csv")
 class CsvControllerTest extends IntegrationTest {
 
-  @Autowired
-  private CsvDocumentRepository repository;
+  private final CsvDocumentRepository repository;
 
   @Autowired
-  CsvControllerTest(WebApplicationContext webApplicationContext) {
+  protected CsvControllerTest(WebApplicationContext webApplicationContext,
+                              CsvDocumentRepository repository) {
     super(webApplicationContext);
+    this.repository = repository;
   }
 
   @BeforeEach

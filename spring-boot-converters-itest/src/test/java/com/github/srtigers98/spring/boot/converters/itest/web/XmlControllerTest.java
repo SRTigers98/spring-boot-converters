@@ -3,7 +3,6 @@ package com.github.srtigers98.spring.boot.converters.itest.web;
 import com.github.srtigers98.spring.boot.converters.itest.dao.XmlDocumentRepository;
 import com.github.srtigers98.spring.boot.converters.itest.entity.XmlDocument;
 import com.github.srtigers98.spring.boot.converters.itest.util.IntegrationTest;
-import org.assertj.core.util.Files;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -25,12 +24,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("xml")
 class XmlControllerTest extends IntegrationTest {
 
-  @Autowired
-  private XmlDocumentRepository repository;
+  private final XmlDocumentRepository repository;
 
   @Autowired
-  XmlControllerTest(WebApplicationContext webApplicationContext) {
+  protected XmlControllerTest(WebApplicationContext webApplicationContext,
+                              XmlDocumentRepository repository) {
     super(webApplicationContext);
+    this.repository = repository;
   }
 
   @BeforeEach
@@ -41,8 +41,8 @@ class XmlControllerTest extends IntegrationTest {
 
   @Test
   void getXmlDocumentTest() throws Exception {
-    var xml = Files.contentOf(ResourceUtils.getFile("classpath:xml/test-get.xml"),
-                              StandardCharsets.UTF_8);
+    var xml = Files.readString(ResourceUtils.getFile("classpath:xml/test-get.xml")
+                                            .toPath());
     var testGetXml = this.sanitizeFileContent(xml);
 
     var request = MockMvcRequestBuilders.get("/xml")
@@ -58,8 +58,8 @@ class XmlControllerTest extends IntegrationTest {
 
   @Test
   void getXmlDocumentListTest() throws Exception {
-    var xml = Files.contentOf(ResourceUtils.getFile("classpath:xml/test-get-list.xml"),
-                              StandardCharsets.UTF_8);
+    var xml = Files.readString(ResourceUtils.getFile("classpath:xml/test-get-list.xml")
+                                            .toPath());
     var testGetXml = this.sanitizeFileContent(xml);
 
     var request = MockMvcRequestBuilders.get("/xml/list");
@@ -75,8 +75,8 @@ class XmlControllerTest extends IntegrationTest {
 
   @Test
   void getXmlDocumentListCustomTest() throws Exception {
-    var xml = Files.contentOf(ResourceUtils.getFile("classpath:xml/test-get-list-custom.xml"),
-                              StandardCharsets.UTF_8);
+    var xml = Files.readString(ResourceUtils.getFile("classpath:xml/test-get-list-custom.xml")
+                                            .toPath());
     var testGetXml = this.sanitizeFileContent(xml);
 
     var request = MockMvcRequestBuilders.get("/xml/list/custom");
@@ -92,8 +92,8 @@ class XmlControllerTest extends IntegrationTest {
 
   @Test
   void saveXmlDocumentTest() throws Exception {
-    var xml = Files.contentOf(ResourceUtils.getFile("classpath:xml/test-post.xml"),
-                              StandardCharsets.UTF_8);
+    var xml = Files.readString(ResourceUtils.getFile("classpath:xml/test-post.xml")
+                                            .toPath());
     var testPostXml = this.sanitizeFileContent(xml);
 
     var request = MockMvcRequestBuilders.post("/xml")
@@ -109,8 +109,8 @@ class XmlControllerTest extends IntegrationTest {
 
   @Test
   void saveXmlDocumentListTest() throws Exception {
-    var xml = Files.contentOf(ResourceUtils.getFile("classpath:xml/test-post-list.xml"),
-                              StandardCharsets.UTF_8);
+    var xml = Files.readString(ResourceUtils.getFile("classpath:xml/test-post-list.xml")
+                                            .toPath());
     var testPostXml = this.sanitizeFileContent(xml);
 
     var request = MockMvcRequestBuilders.post("/xml/list")
