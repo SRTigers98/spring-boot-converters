@@ -2,6 +2,7 @@ package com.github.srtigers98.spring.boot.converters.csv;
 
 import com.github.srtigers98.spring.boot.converters.util.UnitTestUtils;
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -22,6 +25,7 @@ import java.nio.file.Path;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -87,6 +91,23 @@ class OpenCSVHttpMessageConverterTest {
     }
   }
 
+  @Test
+  void writeInternalCSVRequiredFieldEmptyExceptionTest() throws IOException {
+    var documents = new CsvDocument[]{ new CsvDocument(null, "Dent", "Arthur"),
+        new CsvDocument(2, "Prefect", "Ford") };
+    var outputMessage = mock(HttpOutputMessage.class);
+
+    try (var csvStream = new ByteArrayOutputStream()) {
+      when(outputMessage.getBody()).thenReturn(csvStream);
+
+      var e = assertThrows(ResponseStatusException.class,
+                           () -> tested.writeInternal(documents, outputMessage));
+
+      assertThat(e.getStatus(), is(HttpStatus.INTERNAL_SERVER_ERROR));
+      assertThat(e.getCause(), is(instanceOf(CsvRequiredFieldEmptyException.class)));
+    }
+  }
+
   private Path testInputCsv() throws FileNotFoundException {
     return ResourceUtils.getFile("classpath:csv/test-input.csv")
                         .toPath();
@@ -102,7 +123,7 @@ class OpenCSVHttpMessageConverterTest {
   @AllArgsConstructor
   public static class CsvDocument implements Serializable {
 
-    @CsvBindByName
+    @CsvBindByName(required = true)
     private Integer id;
     @CsvBindByName
     private String  name;
