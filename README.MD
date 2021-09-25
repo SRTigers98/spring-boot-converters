@@ -16,8 +16,8 @@ Some common file formats can then be used for the REST interfaces.
 
 |Format|Status|Since|Documentation|
 |---|:---:|:---:|:---:|
-|XML|Supported|1.0.0|In Progress|
-|CSV|Supported|1.0.0|In Progress|
+|XML|Supported|1.0.0|[XML Conversion](https://github.com/SRTigers98/spring-boot-converters/wiki/XML-Conversion)|
+|CSV|Supported|1.0.0|[CSV Conversion](https://github.com/SRTigers98/spring-boot-converters/wiki/CSV-Conversion)|
 
 ## Usage
 
