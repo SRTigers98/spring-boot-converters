@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
+/**
+ * Controller to test the CSV conversion feature.
+ */
 @RestController
 @RequestMapping("/csv")
 public class CsvController {

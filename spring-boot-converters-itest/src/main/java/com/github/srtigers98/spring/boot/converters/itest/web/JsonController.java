@@ -5,6 +5,9 @@ import com.github.srtigers98.spring.boot.converters.itest.entity.JsonDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller to test that the default application type is still JSON.
+ */
 @RestController
 @RequestMapping("/json")
 public class JsonController {
